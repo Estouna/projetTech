@@ -1,0 +1,139 @@
+Quelques explications sur les différents dossiers/fichiers crées :
+
+
+1) .env
+
+.env veut dire environnement, on trouve dedans les variables d'environnements qui vont permettre de gérer notre application.
+
+Par exemple :
+- APP_ENV=dev 
+indique qu'on est dans un mode de développement
+- APP_SECRET=d6a6187c628c8f540637984a2b172e97 
+est la clé secrète qui va être utilisé pour par exemple hasher des tokens.
+
+# DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name?serverVersion=5.7&charset=utf8mb4"
+- va permettre de gérer la base de donnée mysql
+Pour ce projet on mettra : DATABASE_URL="mysql://root:@127.0.0.1:3306/projet_tech?serverVersion=5.7&charset=utf8mb4"
+On enlève le # pour décommenter on remplace db_user par root, on supprime db_password puisque pas de password, et on remplace db_name par le nom de la bdd ici projet_tech 
+
+On peut avoir un fichier .env par environnement de travail, 
+c'est à dire par exemple pour l'environnement local pour pouvoir garder les informations critiques qui ne doivent pas être visible, chez vous, 
+et pouvoir sauvegarder .env qui contiendra juste le squelette de notre fichier de configuration sur GitHub (GitHub peut-être hacker)
+
+
+
+2) .gitignore
+
+Fichiers qui permet de préciser quels fichiers ne seront pas sauvegarder sur GitHub (informations critiques comme .htpassword ou .env.local qui contiendra par exemple le password de la bdd)
+
+
+
+3) .composer.json
+
+.composer.json permet de définir l'ensemble des dépendances de notre projet comme les plugins, l'autoload en psr-4 etc. Toutes les bibliothèques ajoutées avec composer se retrouveront ici.
+
+Par exemple :
+- "php": ">=8.0.2", 
+signifie que pour pouvoir travailler je dois avoir une version de PHP supérieur ou  égal à 8.0.2
+
+- "ext-ctype": "*", et "ext-iconv": "*", 
+qu'on a besoin des bibliothèques ctype et iconv
+
+"doctrine/annotations": "^1.0", "doctrine/doctrine-bundle": "^2.5", "doctrine/doctrine-migrations-bundle": "^3.2", "doctrine/orm": "^2.11",
+qu'on a besoin des doctrines annotations": "^1.0", doctrine-bundle": "^2.5", doctrine-migrations-bundle": "^3.2" et orm": "^2.11"
+
+Doctrine est un ORM "couche d'abstraction à la base de données" pour PHP. 
+Il s'agit d'un logiciel libre sous licence GNU LGPL. 
+Doctrine est l'ORM par défaut du framework Symfony (depuis la version 1.3 de ce framework). 
+Cependant, son utilisation dans le cadre d'un projet développé avec Symfony est optionnelle. 
+
+- "symfony/console": "6.0.*",
+La console symfony
+
+etc ...
+
+
+
+4) bin/console
+
+Dans le dossier bin on trouve le fichier console qui va permettre d'executer du code, de lancer un serveur.
+Par exemple pour lancer un serveur on rentre dans le terminal en précisant le chemin de l'index dans public/index.php 
+- symfony server:start ou symfony serve
+qui créra une adresse en localhost comme par exemple http://127.0.0.1:8001
+
+
+
+5) Dossier config
+
+Le dossier packages va contenir toute la configuration des packages que l'on va avoir.
+
+Par exemple: 
+- mailer.yaml
+qui permet de gérer la partie mailing
+
+- security.yaml
+tout ce qui concerne l'authentification (password)
+
+- translation.yaml
+tout ce qui concerne la traduction
+
+- twig.yaml
+tout ce qui concerne la gestion de twig (moteur de templating qui va gérer la couche view)
+
+etc
+
+
+Le dossier routes va contenir la configuration des routes
+
+et d'autres fichiers pour la configuration de nos services
+
+
+
+6) Dossier migrations
+
+Il contient toutes les migrations de base de données, c'est à dire les fichiers sql pour gérer la base de données
+
+
+
+7) Dossier public
+
+Il contient le fichier index.php qu'on appelle le controleur frontal qui est l'entrée de l'application. 
+Toutes les requêtes vont êtres récupérer ici, il aura comme role d'appeler le noyau de symfony qui va déclencher tous le processus de travail
+
+
+
+8) Dossier src
+
+Il contient l'ensemble de notre code (c'est le dossier virtuel App qui contiendra nos classes).
+C'est là où on va surtout coder.
+
+
+
+9) Dossier templates
+
+Contient la partie view de l'application
+
+
+
+10) Dossier tests (euh celui là je l'ai pas, on verra plus tard)
+
+Pour les tests unitaire
+
+
+
+11) Dossier translations
+
+Contient ce qui concerne la traduction
+
+
+
+11) Dossier var
+
+- Contient le dossier cache, puisque symfony comme tous frameworks qui se respectent va utilser le cache pour optimiser le rendu de nos views
+- Contient le dossier log, qui permet de logger (qui liste tous ce qui se passe) tout le fonctionnement de notre application et qui est utilié en background par symfony
+
+
+
+11) Dossier vendor
+
+- Contient les bibliothèques de notre projets qu'on a vu dans le fichiers composer.json. Elles se trouvent réelement dans ce dossier
